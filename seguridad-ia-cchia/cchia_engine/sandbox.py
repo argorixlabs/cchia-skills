@@ -11,7 +11,6 @@ from __future__ import annotations
 import os
 import signal
 import subprocess
-import sys
 import threading
 import time
 from dataclasses import dataclass
@@ -231,8 +230,13 @@ def _posix_preexec(limits: SandboxLimits) -> Callable[[], None]:
         memory = limits.memory_mb * 1024 * 1024
         resource.setrlimit(resource.RLIMIT_AS, (memory, memory))
         resource.setrlimit(resource.RLIMIT_CPU, (limits.cpu_seconds, limits.cpu_seconds))
-        if hasattr(resource, "RLIMIT_NPROC"):
-            resource.setrlimit(resource.RLIMIT_NPROC, (limits.max_processes, limits.max_processes))
+        # RLIMIT_NPROC counts every process/thread owned by the real UID, not
+        # members of this worker's process group.  Applying max_processes as an
+        # absolute UID-wide ceiling makes a child fork fail immediately on
+        # shared CI/container users that already own more processes than the
+        # requested sandbox quota.  A truthful per-tree process quota requires
+        # a dedicated UID or a writable cgroup pids controller, neither of
+        # which this portable backend can assume.
         if hasattr(resource, "RLIMIT_CORE"):
             resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
 
@@ -509,9 +513,8 @@ def run_worker_process(
         for name, key, value, mechanism in (
             ("memory_limit", "memory_mb", limits.memory_mb, "RLIMIT_AS"),
             ("cpu_limit", "cpu_seconds", limits.cpu_seconds, "RLIMIT_CPU"),
-            ("process_limit", "max_processes", limits.max_processes, "RLIMIT_NPROC"),
         ):
-            supported = rlimits_active and (name != "process_limit" or sys.platform != "darwin")
+            supported = rlimits_active
             report["controls"][name] = _control(
                 requested=True,
                 active=supported,
@@ -524,8 +527,21 @@ def run_worker_process(
             )
             if supported:
                 report["limits"]["enforced"][key] = value
+        report["controls"]["process_limit"] = _control(
+            requested=True,
+            active=False,
+            mechanism=None,
+            detail=(
+                "RLIMIT_NPROC es un límite global del UID, no del árbol del worker; "
+                "se omite para no bloquear forks legítimos ni interferir con procesos ajenos. "
+                "Una cuota por árbol requiere un UID dedicado o cgroup pids."
+            ),
+        )
         report["limitations"].append(
-            "La semántica efectiva de RLIMIT_AS/RLIMIT_NPROC varía por kernel, usuario y contenedor."
+            "La semántica efectiva de RLIMIT_AS varía por kernel y contenedor."
+        )
+        report["limitations"].append(
+            "POSIX portable no aplica max_processes: RLIMIT_NPROC es global al UID y no contiene un árbol de procesos."
         )
 
     timed_out = False

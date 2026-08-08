@@ -6,8 +6,10 @@ import os
 import sys
 import tempfile
 import time
+import types
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +18,7 @@ if str(SKILL_ROOT) not in sys.path:
 
 from cchia_engine.models import CheckPackage
 from cchia_engine.runner import run_check
+from cchia_engine import sandbox as sandbox_module
 from cchia_engine.sandbox import SandboxLimits, minimal_worker_environment, run_worker_process
 from cchia_engine.utils import canonical_hash, sha256_file
 
@@ -196,7 +199,37 @@ class SandboxAdversarialTests(unittest.TestCase):
             self.assertTrue(sandbox["controls"][name]["active"], name)
         self.assertFalse(sandbox["controls"]["network_namespace"]["active"])
         self.assertFalse(sandbox["controls"]["filesystem_read_only_boundary"]["active"])
+        if os.name != "nt":
+            process_limit = sandbox["controls"]["process_limit"]
+            self.assertFalse(process_limit["active"])
+            self.assertIsNone(sandbox["limits"]["enforced"]["max_processes"])
+            self.assertIn("global del UID", process_limit["detail"])
         self.assertTrue(sandbox["limitations"])
+
+    def test_posix_preexec_never_applies_uid_wide_nproc_limit(self):
+        calls = []
+        fake_resource = types.ModuleType("resource")
+        fake_resource.RLIMIT_AS = 1
+        fake_resource.RLIMIT_CPU = 2
+        fake_resource.RLIMIT_NPROC = 3
+        fake_resource.RLIMIT_CORE = 4
+
+        def setrlimit(resource_id, limits):
+            calls.append((resource_id, limits))
+
+        fake_resource.setrlimit = setrlimit
+        limits = SandboxLimits(
+            memory_mb=128,
+            cpu_seconds=4,
+            max_processes=4,
+            max_output_bytes=4096,
+        )
+        with patch.dict(sys.modules, {"resource": fake_resource}):
+            sandbox_module._posix_preexec(limits)()
+
+        applied = {resource_id for resource_id, _limits in calls}
+        self.assertEqual({fake_resource.RLIMIT_AS, fake_resource.RLIMIT_CPU, fake_resource.RLIMIT_CORE}, applied)
+        self.assertNotIn(fake_resource.RLIMIT_NPROC, applied)
 
     def test_runner_degrades_pass_when_collection_is_incomplete_before_hashing(self):
         source = "def evaluate(context):\n    return " + VALID_RESULT + "\n"

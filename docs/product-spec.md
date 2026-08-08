@@ -216,7 +216,7 @@ manteniendo evidencia determinista y ordenada por ID.
   límite post-captura de 4 MiB y hash canónico verificado.
 - Evaluación de evidencia runtime por AWS IAM, Azure RBAC, GCP IAM, GitHub, Kubernetes RBAC y workloads; ausencia,
   error, `OUTPUT_LIMIT` o cobertura crítica insuficiente nunca produce PASS.
-- Baseline de 137 tests de catálogo, safety, scaffold y flujo E2E. Tests y E2E runtime usan mocks/fixtures sintéticos:
+- Baseline de 138 tests de catálogo, safety, scaffold y flujo E2E. Tests y E2E runtime usan mocks/fixtures sintéticos:
   no prueban autenticación ni estado de tenants, cuentas, clusters o repositorios reales.
 - Skill válida e instalada por junction en Codex.
 

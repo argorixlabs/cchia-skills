@@ -214,7 +214,7 @@ es una frontera suficiente para checks hostiles. Consulte [security-compiler.md]
 python -m unittest discover -s seguridad-ia-cchia\tests -v
 ```
 
-Baseline de engine 0.5.0: **137 tests** y el gate de **11 checks/33 fixtures**. Los artefactos E2E se generan localmente
+Baseline de engine 0.5.0: **138 tests** y el gate de **11 checks/33 fixtures**. Los artefactos E2E se generan localmente
 y se excluyen del repositorio mediante `.gitignore` para evitar publicar snapshots o rutas del entorno evaluado. Los
 tests, fixtures y el E2E runtime usan respuestas sintéticas/mocks contractuales: demuestran wiring, estados, redacción,
 hashes y evaluación, pero **no prueban consultas autenticadas ni el estado de tenants/cuentas/clusters/repositorios

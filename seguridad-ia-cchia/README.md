@@ -49,7 +49,7 @@ findings e informes. Los tres fixtures obligatorios —positivo, negativo y sin 
 del fingerprint del catálogo. `python scripts/cchia.py validate` es el gate ejecutable: exige la matriz completa,
 valida contratos/hashes y debe informar `11 CCHIA Checks y 33 fixtures válidos` para esta distribución.
 
-La baseline 0.5.0 es de **137 tests**. Las pruebas y E2E runtime usan mocks/fixtures sintéticos; verifican contratos,
+La baseline 0.5.0 es de **138 tests**. Las pruebas y E2E runtime usan mocks/fixtures sintéticos; verifican contratos,
 wiring, redacción y semántica, pero no consultan ni prueban tenants AWS/Azure/GCP, clusters o repositorios GitHub reales.
 
 AWS/Azure/GitHub ya tienen cobertura basal, no exhaustiva. Quedan superficies más profundas —incluidos SCP/Identity

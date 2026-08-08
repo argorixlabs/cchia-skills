@@ -189,7 +189,7 @@ control, verifica collectors embebidos y sus hashes, ejecuta los checks contra l
 con el esperado. No ejecuta `aws`, `az`, `gcloud`, `gh` ni `kubectl`. En esta distribución el gate exitoso informa
 `11 CCHIA Checks y 33 fixtures válidos`; cualquier error retorna código no cero.
 
-La baseline 0.5.0 es de 137 tests. Los unit tests, fixtures y E2E runtime usan evidencia sintética y procesos
+La baseline 0.5.0 es de 138 tests. Los unit tests, fixtures y E2E runtime usan evidencia sintética y procesos
 mockeados: prueban contratos, allow-lists, wiring, estados, redacción, hashes y evaluación determinista, pero no
 autentican ni prueban el estado de tenants AWS/Azure/GCP, clusters Kubernetes o repositorios GitHub reales.
 
@@ -214,7 +214,9 @@ Capas portables:
 
 Controles OS intentados:
 
-- POSIX: sesión nueva, rlimits de memoria/CPU/procesos y `killpg` al vencer el timeout.
+- POSIX: sesión nueva, rlimits de memoria/CPU y `killpg` al vencer el timeout. El backend portable no aplica
+  `RLIMIT_NPROC`: ese límite cuenta todos los procesos del UID, no solo el árbol del worker, y podría interferir con
+  procesos ajenos. Una cuota de procesos por árbol requiere un UID dedicado o un controlador cgroup `pids`.
 - Windows: Job Object con kill-on-close y límites de memoria, CPU y procesos activos.
 
 Estos controles son defensa en profundidad y pueden no estar disponibles. El fallback no es fail-closed: si Job Object
@@ -224,8 +226,9 @@ solo cubre la evaluación funcional; el consumidor debe decidir si la ausencia d
 ejecución.
 
 La evidencia también conserva límites solicitados frente a los efectivamente aplicados. En Windows existe una pequeña
-ventana entre crear el proceso y asignarlo al Job Object; en POSIX la semántica de `RLIMIT_AS`/`RLIMIT_NPROC` depende
-del kernel, usuario y contenedor. Estas condiciones quedan declaradas, no se promueven a garantía fuerte.
+ventana entre crear el proceso y asignarlo al Job Object; en POSIX la semántica de `RLIMIT_AS` depende del kernel y
+contenedor, y `max_processes` se declara no aplicado. Estas condiciones quedan declaradas, no se promueven a garantía
+fuerte.
 
 Esto reduce la superficie accidental de checks revisados, pero no convierte `exec` de Python en una frontera de
 seguridad absoluta ni prueba ausencia de bypass del intérprete. No ejecutar checks no confiables únicamente sobre esta

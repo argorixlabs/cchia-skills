@@ -121,7 +121,7 @@ collectors; el catálogo debe reportar
 `11 CCHIA Checks y 33 fixtures válidos`; un fixture ausente, un status inesperado, un contrato roto o un hash collector
 inválido debe hacer fallar el comando.
 
-La baseline es de 137 tests. Los fixtures y E2E runtime usan collectors mockeados y evidencia sintética: prueban el
+La baseline es de 138 tests. Los fixtures y E2E runtime usan collectors mockeados y evidencia sintética: prueban el
 contrato del paquete y la semántica fail-closed, no el estado ni la autenticación de tenants/cuentas/clusters/repositorios
 reales. AWS/Azure/GitHub ya están cubiertos de forma basal; profundidad de proveedor, firma/attestation, policy/pool,
 continuous assurance, streaming acotado y sandbox externo fuerte permanecen en roadmap.
