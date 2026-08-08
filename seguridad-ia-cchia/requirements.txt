@@ -1,2 +1,2 @@
-PyYAML>=6.0,<7
+PyYAML>=6.0.3,<7
 jsonschema>=4.22,<5
