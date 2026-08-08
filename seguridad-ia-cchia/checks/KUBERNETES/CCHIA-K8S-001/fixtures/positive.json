@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-001",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["kubernetes"],
+    "signal_evidence": {"kubernetes": ["fixture manifest"]},
+    "system": {},
+    "collectors": [],
+    "collection": {"complete": true},
+    "files": [
+      {
+        "path": "k8s/dangerous-pod.yaml",
+        "content": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: dangerous\nspec:\n  containers:\n    - name: app\n      securityContext:\n        privileged: true\n"
+      }
+    ]
+  }
+}

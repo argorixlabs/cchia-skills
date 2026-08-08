@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/check/expected.schema.json",
+  "title": "CCHIA Check expected result contract",
+  "type": "object",
+  "required": ["schema_version", "allowed_statuses", "required_fields"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "allowed_statuses": {"type": "array", "items": {"enum": ["PASS", "FAIL", "PARTIAL", "NOT_ASSESSED", "NOT_APPLICABLE", "ERROR"]}},
+    "required_fields": {"type": "array", "items": {"type": "string"}, "minItems": 6}
+  }
+}

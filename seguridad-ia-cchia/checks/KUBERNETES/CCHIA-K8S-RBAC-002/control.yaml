@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-K8S-RBAC-002
+title: RBAC runtime sin grants públicos ni privilegios amplios
+domain: KUBERNETES
+objective: Detectar subjects públicos o anónimos y bindings efectivos a cluster-admin o roles con wildcards/escalación.
+severity: CRITICAL
+evidence:
+  minimum_level: E4
+  retention: assessment
+applicability:
+  any_of: [runtime-k8s-rbac, collector-kubectl-rbac-requested]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Autorización RBAC del clúster Kubernetes
+  risk: Identidades públicas o comprometidas pueden recibir privilegios administrativos o excesivos.
+  business_impact: Compromiso transversal de aplicaciones, secretos, datos y continuidad del clúster.
+  technical_impact: Wildcards, verbos de escalación y cluster-admin amplían el blast radius y permiten control del plano Kubernetes.
+  regulatory_compliance_impact: Debilita least privilege y control de acceso; la obligación concreta depende de jurisdicción, sector y alcance.
+  root_cause: Bindings sobredimensionados, subjects demasiado amplios o gobierno insuficiente de privilegios.
+  priority: Immediate
+  owner: Platform Security / IAM / SRE
+  verification: Remover o acotar bindings y reejecutar kubectl-rbac más CCHIA-K8S-RBAC-002 con evidencia AVAILABLE completa.
+  residual_risk: El snapshot no demuestra autenticación externa, impersonation efectiva, admission ni cambios posteriores.

@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-K8S-001
+title: Workloads Kubernetes sin privilegios peligrosos
+domain: KUBERNETES
+objective: Detectar configuraciones manifiestas que amplían el acceso del contenedor al host o al kernel.
+severity: HIGH
+evidence:
+  minimum_level: E3
+  retention: assessment
+applicability:
+  any_of: [kubernetes]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Manifiestos de workloads Kubernetes
+  risk: Un contenedor comprometido puede ampliar su impacto hacia el nodo o cargas vecinas.
+  business_impact: Compromiso de servicios, datos y continuidad de la plataforma.
+  technical_impact: Privileged mode, host namespace/volumes o privilege escalation aumentan el blast radius.
+  regulatory_compliance_impact: Brecha técnica de hardening; la obligación concreta depende del alcance y sector.
+  root_cause: Baseline de pod security no aplicado o excepciones no gobernadas.
+  priority: 30 days
+  owner: Platform Security / SRE
+  verification: Corregir manifiestos, aplicar policy admission y reejecutar CCHIA-K8S-001.
+  residual_risk: Debe verificarse admission y configuración runtime del clúster.

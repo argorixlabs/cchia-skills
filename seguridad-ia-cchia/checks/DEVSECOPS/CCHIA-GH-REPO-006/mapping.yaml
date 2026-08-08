@@ -1,0 +1,50 @@
+schema_version: "1.0"
+control_id: CCHIA-GH-REPO-006
+frameworks:
+  nist:
+    - id: NIST-SP-800-53r5.1-CM-5
+      type: conceptual
+      rationale: Restricciones de acceso para cambio respaldan enforcement sobre cambios al repositorio.
+    - id: NIST-SP-800-53r5.1-AC-6
+      type: conceptual
+      rationale: Least Privilege respalda permisos read por defecto para el token de workflows.
+  iso:
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación general con control de cambios, privilegios y desarrollo seguro; confirmar controles exactos contra copia licenciada.
+  cchia:
+    - id: CCHIA-GH-REPO-006
+      type: native
+      rationale: Evaluación read-only de metadata, rulesets y defaults de GitHub Actions.
+  github:
+    - id: GitHub-Repository-Rulesets
+      type: direct
+      rationale: GitHub documenta rulesets y reglas de pull request para proteger ramas y exigir aprobaciones.
+    - id: GitHub-Actions-Workflow-Permissions
+      type: direct
+      rationale: GitHub expone los permisos por defecto del GITHUB_TOKEN y si Actions puede aprobar pull requests.
+sources:
+  - title: REST API endpoints for repository rules
+    url: https://docs.github.com/en/rest/repos/rules?apiVersion=2022-11-28
+    verified: "2026-08-07"
+  - title: Available rules for rulesets
+    url: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
+    verified: "2026-08-07"
+  - title: REST API endpoints for GitHub Actions permissions
+    url: https://docs.github.com/en/rest/actions/permissions?apiVersion=2022-11-28
+    verified: "2026-08-07"
+  - title: Managing GitHub Actions settings for a repository
+    url: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository
+    verified: "2026-08-07"
+  - title: Use GITHUB_TOKEN for authentication in workflows
+    url: https://docs.github.com/en/actions/tutorials/authenticate-with-github_token
+    verified: "2026-08-07"
+  - title: GitHub CLI repo view manual
+    url: https://cli.github.com/manual/gh_repo_view
+    verified: "2026-08-07"
+  - title: GitHub CLI api manual
+    url: https://cli.github.com/manual/gh_api
+    verified: "2026-08-07"
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"

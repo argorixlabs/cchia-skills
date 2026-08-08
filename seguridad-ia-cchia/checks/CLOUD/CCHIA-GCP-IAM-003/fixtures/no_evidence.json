@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GCP-IAM-003",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["collector-gcloud-iam-requested"],
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "gcloud-iam",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "UNAVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": "fixture-project",
+          "provider": "gcp",
+          "interface": {
+            "kind": "command",
+            "tool": "gcloud",
+            "sdk": "Google Cloud CLI",
+            "sdk_version": null,
+            "executable_available": false,
+            "resolved_executable": null
+          },
+          "commands": [
+            {
+              "command_id": "project-description",
+              "policy_id": "gcloud.projects.describe.v1",
+              "argv": ["gcloud", "projects", "describe", "fixture-project", "--format=json", "--quiet"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "project-iam-policy",
+              "policy_id": "gcloud.projects.get-iam-policy.v1",
+              "argv": ["gcloud", "projects", "get-iam-policy", "fixture-project", "--format=json", "--quiet"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "service-accounts",
+              "policy_id": "gcloud.iam.service-accounts.list.v1",
+              "argv": ["gcloud", "iam", "service-accounts", "list", "--project", "fixture-project", "--format=json", "--quiet"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            }
+          ]
+        },
+        "evidence": [],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["No se encontró gcloud en PATH; no se ejecutó ningún comando."],
+        "evidence_sha256": "8308a345f8f07b237aa47d452273727c4fb4e230f019bbc6c3c24c1684fb3714"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

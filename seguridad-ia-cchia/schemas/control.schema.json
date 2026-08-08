@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/check/control.schema.json",
+  "title": "CCHIA Check control contract",
+  "type": "object",
+  "required": ["schema_version", "version", "id", "title", "domain", "objective", "severity", "evidence", "applicability", "execution", "finding"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "id": {"type": "string", "pattern": "^CCHIA-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 5},
+    "domain": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+    "objective": {"type": "string", "minLength": 10},
+    "severity": {"enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFORMATIONAL"]},
+    "evidence": {
+      "type": "object",
+      "required": ["minimum_level", "retention"],
+      "properties": {"minimum_level": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]}, "retention": {"type": "string"}}
+    },
+    "applicability": {
+      "type": "object",
+      "properties": {
+        "always": {"type": "boolean"},
+        "all_of": {"type": "array", "items": {"type": "string"}},
+        "any_of": {"type": "array", "items": {"type": "string"}},
+        "none_of": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["mode", "timeout_seconds"],
+      "properties": {"mode": {"const": "read_only"}, "timeout_seconds": {"type": "integer", "minimum": 1, "maximum": 60}}
+    },
+    "finding": {"type": "object"}
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/check/mapping.schema.json",
+  "title": "CCHIA Check crosswalk contract",
+  "type": "object",
+  "required": ["schema_version", "control_id", "frameworks", "sources"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "control_id": {"type": "string"},
+    "frameworks": {"type": "object"},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "url", "verified"],
+        "properties": {"title": {"type": "string"}, "url": {"type": "string", "format": "uri"}, "verified": {"type": "string", "format": "date"}}
+      }
+    }
+  }
+}

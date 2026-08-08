@@ -1,0 +1,25 @@
+schema_version: "1.0"
+control_id: CCHIA-AI-001
+frameworks:
+  nist:
+    - id: NIST-AI-RMF-1.0-GOVERN
+      type: conceptual
+      rationale: Inventario, roles y ciclo de vida permiten gobernar riesgos de IA.
+    - id: NIST-AI-RMF-1.0-MAP
+      type: conceptual
+      rationale: Contexto, datos, actores y propósito son entradas para mapear el riesgo.
+  iso:
+    - id: ISO/IEC-42001:2023
+      type: conceptual
+      rationale: Alineación con un sistema de gestión de IA y responsabilidades; confirmar requisitos exactos contra copia licenciada.
+  cchia:
+    - id: CCHIA-AI-001
+      type: native
+      rationale: Registro mínimo verificable del sistema de IA.
+sources:
+  - title: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    verified: "2026-08-07"
+  - title: ISO/IEC 42001:2023
+    url: https://www.iso.org/standard/42001
+    verified: "2026-08-07"

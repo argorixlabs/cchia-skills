@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "allowed_statuses": [
+    "PASS",
+    "FAIL",
+    "PARTIAL",
+    "NOT_ASSESSED"
+  ],
+  "required_fields": [
+    "status",
+    "confidence",
+    "evidence_level",
+    "summary",
+    "evidence",
+    "recommendation"
+  ]
+}

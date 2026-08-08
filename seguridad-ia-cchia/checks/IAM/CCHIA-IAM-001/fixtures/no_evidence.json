@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-IAM-001",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["repository"],
+    "files": [],
+    "collection": {"complete": true}
+  }
+}

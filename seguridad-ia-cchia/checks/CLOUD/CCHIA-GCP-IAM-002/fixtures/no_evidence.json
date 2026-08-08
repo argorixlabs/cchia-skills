@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GCP-IAM-002",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["terraform", "gcp"],
+    "files": [],
+    "collection": {"complete": true}
+  }
+}

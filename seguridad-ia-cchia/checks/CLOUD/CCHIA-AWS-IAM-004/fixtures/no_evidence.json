@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AWS-IAM-004",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["collector-aws-iam-requested"],
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "aws-iam",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "UNAVAILABLE",
+        "collected_at": "2026-08-07T23:00:00Z",
+        "provenance": {
+          "target": "fixture-account",
+          "provider": "aws",
+          "interface": {
+            "kind": "command",
+            "tool": "aws",
+            "sdk": "AWS CLI",
+            "sdk_version": null,
+            "executable_available": false,
+            "resolved_executable": null
+          },
+          "commands": [
+            {
+              "command_id": "caller-identity",
+              "policy_id": "aws.sts.get-caller-identity.v1",
+              "argv": ["aws", "sts", "get-caller-identity", "--output", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "account-summary",
+              "policy_id": "aws.iam.get-account-summary.v1",
+              "argv": ["aws", "iam", "get-account-summary", "--output", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "account-authorization-details",
+              "policy_id": "aws.iam.get-account-authorization-details.v1",
+              "argv": ["aws", "iam", "get-account-authorization-details", "--filter", "User", "Role", "Group", "LocalManagedPolicy", "--output", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            }
+          ]
+        },
+        "evidence": [],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["No se encontró AWS CLI; no se ejecutó ningún comando."],
+        "evidence_sha256": "188ae902cb44d6b4f22cbd19ce53b834eb323920454875ea0c122960daf32e1f"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-001",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["kubernetes"],
+    "signal_evidence": {"kubernetes": ["fixture declaration only"]},
+    "system": {},
+    "collectors": [],
+    "collection": {"complete": true},
+    "files": []
+  }
+}

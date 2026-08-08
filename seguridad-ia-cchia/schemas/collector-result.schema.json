@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/collector-result.schema.json",
+  "title": "CCHIA read-only collector result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "collector_id",
+    "collector_version",
+    "mode",
+    "status",
+    "collected_at",
+    "provenance",
+    "evidence",
+    "redaction",
+    "limitations",
+    "evidence_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "collector_id": {
+      "enum": ["aws-iam", "az-role-assignments", "gcloud-iam", "gh-repo-security", "kubectl-cluster", "kubectl-rbac", "kubectl-workloads"]
+    },
+    "collector_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "mode": {"const": "read_only"},
+    "status": {"enum": ["AVAILABLE", "UNAVAILABLE", "ERROR"]},
+    "collected_at": {"type": "string", "format": "date-time"},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "provider", "interface", "commands"],
+      "properties": {
+        "target": {"type": ["string", "null"]},
+        "provider": {"enum": ["aws", "azure", "gcp", "github", "kubernetes"]},
+        "interface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "tool", "sdk", "sdk_version", "executable_available", "resolved_executable"],
+          "properties": {
+            "kind": {"const": "command"},
+            "tool": {"enum": ["aws", "az", "gcloud", "gh", "kubectl"]},
+            "sdk": {"type": "string", "minLength": 1},
+            "sdk_version": {"type": ["string", "null"]},
+            "executable_available": {"type": "boolean"},
+            "resolved_executable": {"type": ["string", "null"]}
+          }
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["command_id", "policy_id", "argv", "status", "exit_code", "duration_ms"],
+            "properties": {
+              "command_id": {"type": "string", "minLength": 1},
+              "policy_id": {"type": "string", "minLength": 1},
+              "argv": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+              "status": {"enum": ["AVAILABLE", "UNAVAILABLE", "ERROR"]},
+              "started_at": {"type": "string", "format": "date-time"},
+              "exit_code": {"type": ["integer", "null"]},
+              "duration_ms": {"type": "integer", "minimum": 0},
+              "stdout_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "stderr": {"type": "string"},
+              "error_type": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command_id", "status", "content_type", "data"],
+        "properties": {
+          "command_id": {"type": "string"},
+          "status": {"enum": ["AVAILABLE", "ERROR"]},
+          "content_type": {"enum": ["application/json", "text/plain"]},
+          "data": {},
+          "error": {"type": "string"}
+        }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applied", "strategy", "replacement"],
+      "properties": {
+        "applied": {"const": true},
+        "strategy": {"const": "cchia-default-v1"},
+        "replacement": {"const": "[REDACTED]"}
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

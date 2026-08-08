@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AI-001",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["ai"],
+    "system": {
+      "name": "Asistente documental CCHIA",
+      "owner": "AI Governance",
+      "provider": "Proveedor de prueba",
+      "model": "modelo-fixture-v1",
+      "data_categories": ["documentación interna sintética"],
+      "human_oversight": {"mode": "required"},
+      "monitoring": {"model_calls": "logged"},
+      "decommissioning": {"kill_switch": "documented"}
+    },
+    "collection": {"complete": true}
+  }
+}

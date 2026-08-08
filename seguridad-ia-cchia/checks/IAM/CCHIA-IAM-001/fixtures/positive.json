@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-IAM-001",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["repository"],
+    "files": [
+      {
+        "path": "src/settings.py",
+        "content": "API_KEY = \"CCHIA_SYNTHETIC_SECRET_FIXTURE_DO_NOT_USE\"\n"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

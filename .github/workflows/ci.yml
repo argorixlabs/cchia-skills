@@ -1,0 +1,42 @@
+name: CCHIA Security Compiler CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Python ${{ matrix.python-version }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.13"]
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: seguridad-ia-cchia/requirements.txt
+
+      - name: Install runtime dependencies
+        run: python -m pip install -r seguridad-ia-cchia/requirements.txt
+
+      - name: Compile Python sources
+        run: python -m compileall -q seguridad-ia-cchia/cchia_engine seguridad-ia-cchia/scripts seguridad-ia-cchia/tests
+
+      - name: Validate CCHIA Check catalog
+        run: python seguridad-ia-cchia/scripts/cchia.py validate
+
+      - name: Run test suite
+        run: python -m unittest discover -s seguridad-ia-cchia/tests -v

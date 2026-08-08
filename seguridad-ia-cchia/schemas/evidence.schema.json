@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/evidence.schema.json",
+  "title": "CCHIA evidence artifact",
+  "type": "object",
+  "required": ["schema_version", "control_id", "control_version", "severity", "execution", "evaluation", "evidence_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "control_id": {"type": "string"},
+    "control_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "severity": {"type": "string"},
+    "execution": {"type": "object"},
+    "evaluation": {
+      "type": "object",
+      "required": ["status", "confidence", "evidence_level", "summary", "evidence", "recommendation"]
+    },
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

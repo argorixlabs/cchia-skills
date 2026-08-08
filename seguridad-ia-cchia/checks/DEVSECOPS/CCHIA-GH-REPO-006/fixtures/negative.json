@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GH-REPO-006",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["repository", "runtime-github-repo-security"],
+    "signal_evidence": {
+      "runtime-github-repo-security": ["fixture gh-repo-security AVAILABLE"]
+    },
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "gh-repo-security",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "github",
+          "interface": {
+            "kind": "command",
+            "tool": "gh",
+            "sdk": "GitHub CLI",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture/gh.exe"
+          },
+          "commands": [
+            {
+              "command_id": "repo-view",
+              "policy_id": "gh.repo.view.v1",
+              "argv": ["gh", "repo", "view", "fixture-org/fixture-repo", "--json", "nameWithOwner,defaultBranchRef,visibility,isArchived"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "3432e3ca1e7222d10b5f1af8528c9788ffba4ac298d65f42afdf9ac41f4dd1fe",
+              "stderr": ""
+            },
+            {
+              "command_id": "repo-metadata",
+              "policy_id": "gh.api.repo.v1",
+              "argv": ["gh", "api", "repos/fixture-org/fixture-repo", "-H", "Accept: application/vnd.github+json", "-H", "X-GitHub-Api-Version: 2022-11-28"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "c5d3fa22156d7e2fa8f3a4d37e73c867c76f670b8ca01ff422c33727f5e48f30",
+              "stderr": ""
+            },
+            {
+              "command_id": "repo-rulesets",
+              "policy_id": "gh.api.repo.rulesets.v1",
+              "argv": ["gh", "api", "repos/fixture-org/fixture-repo/rulesets", "-H", "Accept: application/vnd.github+json", "-H", "X-GitHub-Api-Version: 2022-11-28"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "939283400e594537e0231b6534060a163a131aeca237a266450501292dfc83db",
+              "stderr": ""
+            },
+            {
+              "command_id": "actions-workflow-permissions",
+              "policy_id": "gh.api.repo.actions-workflow-permissions.v1",
+              "argv": ["gh", "api", "repos/fixture-org/fixture-repo/actions/permissions/workflow", "-H", "Accept: application/vnd.github+json", "-H", "X-GitHub-Api-Version: 2022-11-28"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "7f27917c811bcc890b73e78994bfd5e0a51c50e50c2f3fb7d3afb828b0ff95d4",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "repo-view",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "nameWithOwner": "fixture-org/fixture-repo",
+              "defaultBranchRef": {"name": "main"},
+              "visibility": "PUBLIC",
+              "isArchived": false
+            }
+          },
+          {
+            "command_id": "repo-metadata",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "full_name": "fixture-org/fixture-repo",
+              "default_branch": "main",
+              "visibility": "public",
+              "archived": false,
+              "private": false
+            }
+          },
+          {
+            "command_id": "repo-rulesets",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": [
+              {
+                "id": 42,
+                "target": "branch",
+                "enforcement": "active",
+                "conditions": {
+                  "ref_name": {"include": ["~DEFAULT_BRANCH"], "exclude": []}
+                },
+                "rules": [
+                  {
+                    "type": "pull_request",
+                    "parameters": {"required_approving_review_count": 2}
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "command_id": "actions-workflow-permissions",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "default_workflow_permissions": "read",
+              "can_approve_pull_request_reviews": false
+            }
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture sintético; no representa un repositorio real."],
+        "evidence_sha256": "afbca60f3e470d21a2dd4d1fc50e6400d1df80a12f27f6fd8be5d0d8b480edab"
+      }
+    ]
+  }
+}

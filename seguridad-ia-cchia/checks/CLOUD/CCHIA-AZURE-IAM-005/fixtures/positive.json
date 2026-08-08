@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AZURE-IAM-005",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["runtime-azure-role-assignments"],
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "az-role-assignments",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": "fixture-azure-subscription",
+          "provider": "azure",
+          "interface": {
+            "kind": "command",
+            "tool": "az",
+            "sdk": "Azure CLI",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture-tools/az.exe"
+          },
+          "commands": [
+            {
+              "command_id": "azure-account",
+              "policy_id": "az.account.show.v1",
+              "argv": ["az", "account", "show", "--output", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "stderr": ""
+            },
+            {
+              "command_id": "role-assignments",
+              "policy_id": "az.role.assignment.list.v1",
+              "argv": ["az", "role", "assignment", "list", "--all", "--output", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "azure-account",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "id": "11111111-1111-1111-1111-111111111111",
+              "tenantId": "22222222-2222-2222-2222-222222222222"
+            }
+          },
+          {
+            "command_id": "role-assignments",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": [
+              {
+                "roleDefinitionName": "Owner",
+                "roleDefinitionId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                "scope": "/subscriptions/11111111-1111-1111-1111-111111111111",
+                "principalId": "33333333-3333-3333-3333-333333333333",
+                "principalType": "ServicePrincipal",
+                "principalName": "fixture-privileged-app@example.invalid"
+              }
+            ]
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture sintético; no prueba ausencia de drift ni herencia."],
+        "evidence_sha256": "b17aebaba842fce60e2e1a05b635f7579577d8cd9fc2ea27607a61d37d74fa38"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

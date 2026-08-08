@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AZURE-IAM-005",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["collector-az-role-assignments-requested"],
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "az-role-assignments",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "UNAVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": "fixture-azure-subscription",
+          "provider": "azure",
+          "interface": {
+            "kind": "command",
+            "tool": "az",
+            "sdk": "Azure CLI",
+            "sdk_version": null,
+            "executable_available": false,
+            "resolved_executable": null
+          },
+          "commands": [
+            {
+              "command_id": "azure-account",
+              "policy_id": "az.account.show.v1",
+              "argv": ["az", "account", "show", "--output", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "role-assignments",
+              "policy_id": "az.role.assignment.list.v1",
+              "argv": ["az", "role", "assignment", "list", "--all", "--output", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            }
+          ]
+        },
+        "evidence": [],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["No se encontró az en PATH; no se ejecutó ningún comando."],
+        "evidence_sha256": "8994f0a6acce29e9fe11aed7b29990a78b5f05639b1ec1a4d7ba217d1106f1ae"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

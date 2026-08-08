@@ -1,0 +1,32 @@
+schema_version: "1.0"
+control_id: CCHIA-K8S-001
+frameworks:
+  nist:
+    - id: NIST-SP-800-190
+      type: conceptual
+      rationale: Guía de seguridad de contenedores aplicable al aislamiento y configuración de workloads.
+    - id: NIST-SP-800-53r5.1-CM-6
+      type: conceptual
+      rationale: Configuration Settings respalda baselines seguros y excepciones gobernadas.
+  iso:
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación con configuración segura y gestión de plataformas; confirmar controles exactos contra copia licenciada.
+  cchia:
+    - id: CCHIA-K8S-001
+      type: native
+      rationale: Hardening verificable de manifiestos Kubernetes.
+  cis:
+    - id: CIS-Kubernetes-Benchmark
+      type: conceptual
+      rationale: Referencia tecnológica; verificar versión y secciones licenciadas aplicables.
+sources:
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"
+  - title: Kubernetes Pod Security Standards
+    url: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+    verified: "2026-08-07"
+  - title: NIST SP 800-190 Application Container Security Guide
+    url: https://csrc.nist.gov/publications/detail/sp/800-190/final
+    verified: "2026-08-07"

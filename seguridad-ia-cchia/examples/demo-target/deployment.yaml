@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unsafe-agent-demo
+spec:
+  template:
+    spec:
+      containers:
+        - name: agent
+          image: example.invalid/agent:demo
+          securityContext:
+            privileged: true

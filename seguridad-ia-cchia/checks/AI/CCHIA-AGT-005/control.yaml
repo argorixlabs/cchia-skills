@@ -1,0 +1,27 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-AGT-005
+title: Aprobación independiente para acciones agénticas de alto impacto
+domain: AI
+objective: Verificar que las acciones irreversibles o privilegiadas de agentes requieran aprobación fuera del modelo.
+severity: CRITICAL
+evidence:
+  minimum_level: E2
+  retention: assessment
+applicability:
+  all_of: [agent]
+  any_of: [mcp, high-impact-tools, external-input]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Agente, tools y gateway de autorización
+  risk: Prompt injection, error del modelo o tool metadata maliciosa pueden activar acciones destructivas o privilegiadas.
+  business_impact: Fraude, eliminación/publicación de información, cambios de IAM o indisponibilidad.
+  technical_impact: Confused deputy y ejecución con permisos superiores sin mediación completa.
+  regulatory_compliance_impact: Brecha de trazabilidad, supervisión y gestión de riesgos; no implica por sí sola incumplimiento legal.
+  root_cause: La autorización se delega al modelo o no existe un policy enforcement point independiente.
+  priority: Immediate
+  owner: AI Security Architect / Product Owner
+  verification: Demostrar un deny/approval fuera del LLM y reejecutar CCHIA-AGT-005 con evidencia runtime.
+  residual_risk: Persiste riesgo de abuso de tools; reducir con least privilege, límites, logging y kill switch.

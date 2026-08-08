@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GCP-IAM-002",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["repository", "terraform", "gcp"],
+    "files": [
+      {
+        "path": "iam.tf",
+        "content": "resource \"google_project_iam_binding\" \"broad\" {\n  project = \"fixture-project\"\n  role    = \"roles/owner\"\n  members = [\"allUsers\"]\n}\n"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

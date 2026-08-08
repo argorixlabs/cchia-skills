@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GCP-IAM-003",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["runtime-gcp-iam"],
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "gcloud-iam",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": "fixture-project",
+          "provider": "gcp",
+          "interface": {
+            "kind": "command",
+            "tool": "gcloud",
+            "sdk": "Google Cloud CLI",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture-tools/gcloud.exe"
+          },
+          "commands": [
+            {
+              "command_id": "project-description",
+              "policy_id": "gcloud.projects.describe.v1",
+              "argv": ["gcloud", "projects", "describe", "fixture-project", "--format=json", "--quiet"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "stderr": ""
+            },
+            {
+              "command_id": "project-iam-policy",
+              "policy_id": "gcloud.projects.get-iam-policy.v1",
+              "argv": ["gcloud", "projects", "get-iam-policy", "fixture-project", "--format=json", "--quiet"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "stderr": ""
+            },
+            {
+              "command_id": "service-accounts",
+              "policy_id": "gcloud.iam.service-accounts.list.v1",
+              "argv": ["gcloud", "iam", "service-accounts", "list", "--project", "fixture-project", "--format=json", "--quiet"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "project-description",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {"projectId": "fixture-project"}
+          },
+          {
+            "command_id": "project-iam-policy",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "bindings": [
+                {
+                  "role": "roles/storage.objectViewer",
+                  "members": ["group:platform@example.invalid"]
+                }
+              ]
+            }
+          },
+          {
+            "command_id": "service-accounts",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": [{"email": "fixture-runtime@fixture-project.iam.gserviceaccount.com"}]
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture sintético de snapshot puntual; no prueba ausencia de drift."],
+        "evidence_sha256": "707755ba93b820b18073f5823f615ca058232d1f52b52fa1ffbec14a2ab62e9e"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AWS-IAM-004",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["runtime-aws-iam"],
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "aws-iam",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T23:00:00Z",
+        "provenance": {
+          "target": "fixture-account",
+          "provider": "aws",
+          "interface": {
+            "kind": "command",
+            "tool": "aws",
+            "sdk": "AWS CLI",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture-tools/aws.exe"
+          },
+          "commands": [
+            {
+              "command_id": "caller-identity",
+              "policy_id": "aws.sts.get-caller-identity.v1",
+              "argv": ["aws", "sts", "get-caller-identity", "--output", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "stderr": ""
+            },
+            {
+              "command_id": "account-summary",
+              "policy_id": "aws.iam.get-account-summary.v1",
+              "argv": ["aws", "iam", "get-account-summary", "--output", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "stderr": ""
+            },
+            {
+              "command_id": "account-authorization-details",
+              "policy_id": "aws.iam.get-account-authorization-details.v1",
+              "argv": ["aws", "iam", "get-account-authorization-details", "--filter", "User", "Role", "Group", "LocalManagedPolicy", "--output", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "caller-identity",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "UserId": "AROAFIXTURE:session",
+              "Account": "123456789012",
+              "Arn": "arn:aws:sts::123456789012:assumed-role/cchia-fixture/session"
+            }
+          },
+          {
+            "command_id": "account-summary",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "SummaryMap": {
+                "AccountMFAEnabled": 0,
+                "AccountAccessKeysPresent": 1,
+                "Users": 1,
+                "Roles": 0,
+                "Groups": 0,
+                "Policies": 1
+              }
+            }
+          },
+          {
+            "command_id": "account-authorization-details",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "IsTruncated": false,
+              "UserDetailList": [
+                {
+                  "UserName": "fixture-user",
+                  "AttachedManagedPolicies": [
+                    {
+                      "PolicyName": "AdministratorAccess",
+                      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+                    },
+                    {
+                      "PolicyName": "fixture-local-broad",
+                      "PolicyArn": "arn:aws:iam::123456789012:policy/fixture-local-broad"
+                    }
+                  ],
+                  "UserPolicyList": [
+                    {
+                      "PolicyName": "fixture-inline-broad",
+                      "PolicyDocument": {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                          {
+                            "Effect": "Allow",
+                            "Action": "iam:*",
+                            "Resource": "*"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "RoleDetailList": [],
+              "GroupDetailList": [],
+              "Policies": [
+                {
+                  "PolicyName": "fixture-local-broad",
+                  "Arn": "arn:aws:iam::123456789012:policy/fixture-local-broad",
+                  "DefaultVersionId": "v1",
+                  "PolicyVersionList": [
+                    {
+                      "VersionId": "v1",
+                      "IsDefaultVersion": true,
+                      "Document": {
+                        "Version": "2012-10-17",
+                        "Statement": {
+                          "Effect": "Allow",
+                          "Action": "*",
+                          "Resource": "*"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture sintético; no representa una cuenta ni credencial real."],
+        "evidence_sha256": "75f9cfc79e8dc0990b7339e299ace08779693c0e2449576d1eeb1faf8eb70cbc"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

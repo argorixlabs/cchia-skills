@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-K8S-WL-003
+title: Workloads runtime con aislamiento y recursos acotados
+domain: KUBERNETES
+objective: Detectar privilegios, host access y contenedores sin requests/limits efectivos de CPU y memoria en el inventario runtime.
+severity: HIGH
+evidence:
+  minimum_level: E4
+  retention: assessment
+applicability:
+  any_of: [runtime-k8s-workloads, collector-kubectl-workloads-requested]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Pods y controladores Kubernetes observados vía API
+  risk: Una carga comprometida puede escapar su aislamiento o agotar recursos compartidos del nodo.
+  business_impact: Interrupción, degradación o compromiso lateral de servicios y datos alojados en el clúster.
+  technical_impact: Privileged, escalation, host namespaces/volumes y falta de recursos aumentan blast radius y riesgo de DoS.
+  regulatory_compliance_impact: Brecha de hardening y resiliencia técnica; la obligación exacta depende de alcance y sector.
+  root_cause: Baseline runtime/admission incompleta, excepciones no gobernadas o ausencia de política de recursos.
+  priority: 30 days
+  owner: Platform Security / SRE
+  verification: Corregir PodSpecs/policies y reejecutar kubectl-workloads más CCHIA-K8S-WL-003 con evidencia AVAILABLE completa.
+  residual_risk: Un snapshot no prueba enforcement admission, configuración del runtime, explotación ni cambios posteriores.

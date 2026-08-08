@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/check-fixture.schema.json",
+  "title": "CCHIA Check fixture contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "control_id", "case", "expected_status", "context"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "control_id": {
+      "type": "string",
+      "pattern": "^CCHIA-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$"
+    },
+    "case": {"enum": ["positive", "negative", "no_evidence"]},
+    "expected_status": {"enum": ["FAIL", "PARTIAL", "PASS", "NOT_ASSESSED"]},
+    "context": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"case": {"const": "positive"}}, "required": ["case"]},
+      "then": {"properties": {"expected_status": {"enum": ["FAIL", "PARTIAL"]}}}
+    },
+    {
+      "if": {"properties": {"case": {"const": "negative"}}, "required": ["case"]},
+      "then": {"properties": {"expected_status": {"const": "PASS"}}}
+    },
+    {
+      "if": {"properties": {"case": {"const": "no_evidence"}}, "required": ["case"]},
+      "then": {"properties": {"expected_status": {"const": "NOT_ASSESSED"}}}
+    }
+  ]
+}

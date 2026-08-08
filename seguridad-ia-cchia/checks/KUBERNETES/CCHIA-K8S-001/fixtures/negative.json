@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-001",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["kubernetes"],
+    "signal_evidence": {"kubernetes": ["fixture manifest"]},
+    "system": {},
+    "collectors": [],
+    "collection": {"complete": true},
+    "files": [
+      {
+        "path": "k8s/safe-deployment.yaml",
+        "content": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: api\nspec:\n  template:\n    spec:\n      containers:\n        - name: api\n          securityContext:\n            privileged: false\n            allowPrivilegeEscalation: false\n"
+      }
+    ]
+  }
+}

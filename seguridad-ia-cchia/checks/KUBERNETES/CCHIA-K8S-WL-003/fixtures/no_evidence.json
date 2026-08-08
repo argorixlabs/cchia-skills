@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-WL-003",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["kubernetes", "collector-kubectl-workloads-requested"],
+    "signal_evidence": {"collector-kubectl-workloads-requested": ["fixture collector requested"]},
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "kubectl-workloads",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "UNAVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "kubernetes",
+          "interface": {
+            "kind": "command",
+            "tool": "kubectl",
+            "sdk": "Kubernetes kubectl client",
+            "sdk_version": null,
+            "executable_available": false,
+            "resolved_executable": null
+          },
+          "commands": [
+            {
+              "command_id": "workloads",
+              "policy_id": "kubectl.workloads.v1",
+              "argv": [
+                "kubectl",
+                "get",
+                "deployments,statefulsets,daemonsets,replicasets,cronjobs,jobs,pods",
+                "--all-namespaces",
+                "-o",
+                "json"
+              ],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            }
+          ]
+        },
+        "evidence": [],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["kubectl no disponible; no se ejecutó ningún comando."],
+        "evidence_sha256": "12e355a07508d94fbc49b7375c9f02e1297bd14db1a8d577ed1d340823bb837c"
+      }
+    ]
+  }
+}

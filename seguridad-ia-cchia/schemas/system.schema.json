@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/system.schema.json",
+  "title": "CCHIA Security Compiler system intake",
+  "type": "object",
+  "properties": {
+    "name": {"type": "string"},
+    "description": {"type": "string"},
+    "owner": {"type": "string"},
+    "jurisdictions": {"type": "array", "items": {"type": "string"}},
+    "data_categories": {"type": "array", "items": {"type": "string"}},
+    "components": {"type": "array", "items": {"type": "object"}},
+    "agents": {"type": "array", "items": {"type": "object"}},
+    "tools": {"type": "array", "items": {"type": "object"}},
+    "human_oversight": {"type": ["object", "string"]},
+    "monitoring": {"type": ["object", "string"]},
+    "decommissioning": {"type": ["object", "string"]},
+    "signals": {"type": "array", "items": {"type": "string"}}
+  }
+}

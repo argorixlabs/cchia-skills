@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-GCP-IAM-002
+title: Evitar roles básicos y miembros públicos en IAM de GCP por Terraform
+domain: CLOUD
+objective: Detectar bindings Terraform que conceden roles primitivos de alto alcance o acceso público en GCP.
+severity: HIGH
+evidence:
+  minimum_level: E3
+  retention: assessment
+applicability:
+  all_of: [terraform, gcp]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: IAM de proyectos y recursos GCP gestionados con Terraform
+  risk: Permisos excesivos o públicos amplían el blast radius de identidades y recursos cloud.
+  business_impact: Acceso no autorizado, alteración de infraestructura y exposición de datos.
+  technical_impact: Escalamiento mediante roles básicos o principals allUsers/allAuthenticatedUsers.
+  regulatory_compliance_impact: Debilita least privilege y control de acceso; requiere análisis contextual de aplicabilidad.
+  root_cause: Uso de bindings amplios en vez de roles predefinidos/custom mínimos y principals explícitos.
+  priority: 30 days
+  owner: Cloud Security / Platform Engineering
+  verification: Reemplazar el binding, ejecutar terraform plan y volver a ejecutar CCHIA-GCP-IAM-002.
+  residual_risk: Validar IAM efectivo y herencia organizacional fuera del repositorio.

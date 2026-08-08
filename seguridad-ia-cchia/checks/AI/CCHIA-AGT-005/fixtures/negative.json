@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AGT-005",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["agent", "high-impact-tools", "human-approval"],
+    "signal_evidence": {
+      "agent": ["system.agents"],
+      "high-impact-tools": ["system.tools[0].effect"],
+      "human-approval": ["system.human_oversight.mode"]
+    },
+    "collection": {"complete": true}
+  }
+}

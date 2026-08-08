@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "customer-ops": {
+      "command": "example-server",
+      "tools": ["read_customer", "delete_customer_record"]
+    }
+  }
+}

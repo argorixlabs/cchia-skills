@@ -1,0 +1,37 @@
+schema_version: "1.0"
+control_id: CCHIA-AZURE-IAM-005
+frameworks:
+  nist:
+    - id: NIST-CSF-2.0-PR.AA-05
+      type: direct
+      rationale: El check observa asignaciones RBAC que contradicen mínimo privilegio o presentan principals anómalos en el snapshot consultado.
+    - id: NIST-SP-800-53r5.1-AC-6
+      type: direct
+      rationale: La detección de Owner y User Access Administrator en scopes amplios aporta evidencia técnica puntual sobre privilegios excesivos.
+  iso:
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación conceptual con control de acceso y privilegios; no declara conformidad ni reproduce requisitos protegidos.
+  cchia:
+    - id: CCHIA-AZURE-IAM-005
+      type: native
+      rationale: Evidencia runtime redacted de Azure RBAC obtenida mediante comandos Azure CLI allow-listed.
+sources:
+  - title: Azure built-in roles - Owner and User Access Administrator
+    url: https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
+    verified: "2026-08-07"
+  - title: Azure CLI az role assignment list reference
+    url: https://learn.microsoft.com/en-us/cli/azure/role/assignment
+    verified: "2026-08-07"
+  - title: Assign Azure roles using Azure CLI - scope levels and least privilege
+    url: https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli
+    verified: "2026-08-07"
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"
+  - title: NIST Cybersecurity Framework 2.0
+    url: https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
+    verified: "2026-08-07"
+  - title: ISO/IEC 27001:2022
+    url: https://www.iso.org/standard/27001
+    verified: "2026-08-07"

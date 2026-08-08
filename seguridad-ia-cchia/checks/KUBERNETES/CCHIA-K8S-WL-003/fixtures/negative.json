@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-WL-003",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["kubernetes", "runtime-k8s-workloads"],
+    "signal_evidence": {"runtime-k8s-workloads": ["fixture kubectl-workloads AVAILABLE"]},
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "kubectl-workloads",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "kubernetes",
+          "interface": {
+            "kind": "command",
+            "tool": "kubectl",
+            "sdk": "Kubernetes kubectl client",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture/kubectl.exe"
+          },
+          "commands": [
+            {
+              "command_id": "workloads",
+              "policy_id": "kubectl.workloads.v1",
+              "argv": [
+                "kubectl",
+                "get",
+                "deployments,statefulsets,daemonsets,replicasets,cronjobs,jobs,pods",
+                "--all-namespaces",
+                "-o",
+                "json"
+              ],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "7e3a67555bc64a96af4fa55d09ae9f6111692b29b8019a99e2f7b020d750a96e",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "workloads",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "apiVersion": "v1",
+              "kind": "List",
+              "items": [
+                {
+                  "apiVersion": "apps/v1",
+                  "kind": "Deployment",
+                  "metadata": {"name": "api", "namespace": "prod"},
+                  "spec": {
+                    "template": {
+                      "spec": {
+                        "containers": [
+                          {
+                            "name": "api",
+                            "securityContext": {
+                              "privileged": false,
+                              "allowPrivilegeEscalation": false
+                            },
+                            "resources": {
+                              "requests": {"cpu": "100m", "memory": "128Mi"},
+                              "limits": {"cpu": "500m", "memory": "256Mi"}
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture puntual; no prueba enforcement admission."],
+        "evidence_sha256": "08a98bcc54df944e121e0c94a6452e1c4df55df6df85c0be652267ec0adbea59"
+      }
+    ]
+  }
+}

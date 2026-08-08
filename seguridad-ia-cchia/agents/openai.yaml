@@ -1,0 +1,4 @@
+interface:
+  display_name: "CCHIA Security Compiler"
+  short_description: "Checks read-only de ciberseguridad e IA"
+  default_prompt: "Usa $seguridad-ia-cchia para evaluar este sistema con evidencia y ejecutar los CCHIA Checks aplicables."

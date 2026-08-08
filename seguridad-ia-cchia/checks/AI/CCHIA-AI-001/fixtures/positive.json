@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AI-001",
+  "case": "positive",
+  "expected_status": "PARTIAL",
+  "context": {
+    "signals": ["ai"],
+    "system": {
+      "name": "Asistente documental CCHIA",
+      "owner": "AI Governance"
+    },
+    "collection": {"complete": true}
+  }
+}

@@ -1,0 +1,32 @@
+schema_version: "1.0"
+control_id: CCHIA-IAM-001
+frameworks:
+  nist:
+    - id: NIST-CSF-2.0-PR.AA
+      type: conceptual
+      rationale: La protección de credenciales forma parte de Identity Management, Authentication and Access Control.
+    - id: NIST-SP-800-53r5.1-IA-5
+      type: direct
+      rationale: Authenticator Management cubre la protección y gestión del material autenticador.
+  iso:
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación conceptual con gestión de identidades, información de autenticación y control de acceso; confirmar controles exactos contra copia licenciada.
+  cchia:
+    - id: CCHIA-IAM-001
+      type: native
+      rationale: Control de secretos basado en evidencia de repositorio.
+  owasp:
+    - id: OWASP-ASVS-V6
+      type: conceptual
+      rationale: El material criptográfico y los secretos requieren manejo seguro.
+sources:
+  - title: NIST Cybersecurity Framework 2.0
+    url: https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
+    verified: "2026-08-07"
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"
+  - title: ISO/IEC 27001:2022
+    url: https://www.iso.org/standard/27001
+    verified: "2026-08-07"

@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-RBAC-002",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["kubernetes", "collector-kubectl-rbac-requested"],
+    "signal_evidence": {"collector-kubectl-rbac-requested": ["fixture collector requested"]},
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "kubectl-rbac",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "UNAVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "kubernetes",
+          "interface": {
+            "kind": "command",
+            "tool": "kubectl",
+            "sdk": "Kubernetes kubectl client",
+            "sdk_version": null,
+            "executable_available": false,
+            "resolved_executable": null
+          },
+          "commands": [
+            {
+              "command_id": "cluster-rbac",
+              "policy_id": "kubectl.rbac.cluster.v1",
+              "argv": ["kubectl", "get", "clusterroles,clusterrolebindings", "-o", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "namespaced-rbac",
+              "policy_id": "kubectl.rbac.namespaced.v1",
+              "argv": ["kubectl", "get", "roles,rolebindings", "--all-namespaces", "-o", "json"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            }
+          ]
+        },
+        "evidence": [],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["kubectl no disponible; no se ejecutó ningún comando."],
+        "evidence_sha256": "4d18340c7a31f06df7d512628601b2a4d88337a4dae8cc50cf69f79618d32b64"
+      }
+    ]
+  }
+}

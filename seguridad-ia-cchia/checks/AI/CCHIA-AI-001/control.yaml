@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-AI-001
+title: Inventario y ownership mínimo del sistema de IA
+domain: AI
+objective: Verificar que el sistema de IA tenga propietario, proveedor/modelo, datos, supervisión, monitoreo y retiro documentados.
+severity: MEDIUM
+evidence:
+  minimum_level: E2
+  retention: assessment
+applicability:
+  any_of: [ai]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Gobierno del ciclo de vida del sistema de IA
+  risk: Un sistema sin inventario u ownership no puede gobernarse, monitorearse ni retirarse de forma fiable.
+  business_impact: Decisiones sin responsable, dependencia de proveedor y exposición regulatoria no gestionada.
+  technical_impact: Versiones, datos, monitoreo o criterios de desactivación quedan indeterminados.
+  regulatory_compliance_impact: Evidencia parcial para NIST AI RMF e ISO/IEC 42001; no demuestra conformidad.
+  root_cause: Intake y registro de sistemas de IA incompletos.
+  priority: 90 days
+  owner: AI Governance Lead
+  verification: Completar system.yaml y volver a ejecutar CCHIA-AI-001.
+  residual_risk: Depende de verificar que lo documentado opera realmente.

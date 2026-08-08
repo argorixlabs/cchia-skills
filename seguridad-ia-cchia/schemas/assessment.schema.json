@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cchia.cl/schemas/assessment.schema.json",
+  "title": "CCHIA Security Compiler canonical assessment",
+  "type": "object",
+  "required": ["schema_version", "assessment_id", "generated_at", "scope", "applicability", "summary", "results", "collector_evidence", "findings", "target_integrity", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "assessment_id": {"type": "string", "pattern": "^CCHIA-[A-F0-9]{12}$"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "scope": {"type": "object"},
+    "applicability": {"type": "array"},
+    "summary": {
+      "type": "object",
+      "required": ["statuses", "score"],
+      "properties": {"statuses": {"type": "object"}, "score": {"type": "object"}}
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema_version", "control_id", "control_version", "execution", "evaluation", "evidence_sha256"]
+      }
+    },
+    "collector_evidence": {"type": "array", "items": {"type": "object"}},
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "target_integrity": {
+      "type": "object",
+      "required": ["mode", "unchanged", "before_sha256", "after_sha256"],
+      "properties": {
+        "mode": {"type": "string"},
+        "unchanged": {"type": "boolean"},
+        "before_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "after_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

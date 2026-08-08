@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-GCP-IAM-003
+title: Evitar acceso público y roles básicos en IAM efectivo de GCP
+domain: CLOUD
+objective: Evaluar el snapshot runtime read-only de IAM de un proyecto GCP y detectar principals públicos o roles básicos de alto alcance.
+severity: HIGH
+evidence:
+  minimum_level: E4
+  retention: assessment
+applicability:
+  any_of: [runtime-gcp-iam, collector-gcloud-iam-requested]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Política IAM efectiva del proyecto GCP consultado por gcloud-iam
+  risk: Principals públicos o roles básicos amplios pueden otorgar acceso excesivo a recursos y acciones del proyecto.
+  business_impact: Acceso no autorizado, exposición o alteración de datos y ampliación del impacto de una identidad comprometida.
+  technical_impact: allUsers/allAuthenticatedUsers amplían la audiencia y roles/owner, roles/editor o roles/viewer evitan una asignación granular de privilegios.
+  regulatory_compliance_impact: Debilita control de acceso y mínimo privilegio; el hallazgo no demuestra por sí solo incumplimiento de un marco o norma.
+  root_cause: Política IAM efectiva con membresía pública o roles básicos en lugar de principals explícitos y roles predefinidos/custom mínimos.
+  priority: 30 days
+  owner: Cloud Security / Platform Engineering
+  verification: Corregir los bindings, ejecutar nuevamente el collector gcloud-iam con identidad read-only y reejecutar CCHIA-GCP-IAM-003.
+  residual_risk: El snapshot no demuestra historia, ausencia de drift, herencia fuera del proyecto ni efectividad continua de la política.

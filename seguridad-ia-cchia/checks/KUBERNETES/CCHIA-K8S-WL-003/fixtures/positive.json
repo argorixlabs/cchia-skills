@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-WL-003",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["kubernetes", "runtime-k8s-workloads"],
+    "signal_evidence": {"runtime-k8s-workloads": ["fixture kubectl-workloads AVAILABLE"]},
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "kubectl-workloads",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "kubernetes",
+          "interface": {
+            "kind": "command",
+            "tool": "kubectl",
+            "sdk": "Kubernetes kubectl client",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture/kubectl.exe"
+          },
+          "commands": [
+            {
+              "command_id": "workloads",
+              "policy_id": "kubectl.workloads.v1",
+              "argv": [
+                "kubectl",
+                "get",
+                "deployments,statefulsets,daemonsets,replicasets,cronjobs,jobs,pods",
+                "--all-namespaces",
+                "-o",
+                "json"
+              ],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "4ecb88c900f35ef7873f83103312daf1232597cf14b6df0cb8e3495d793cb162",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "workloads",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "apiVersion": "v1",
+              "kind": "List",
+              "items": [
+                {
+                  "apiVersion": "v1",
+                  "kind": "Pod",
+                  "metadata": {"name": "danger", "namespace": "prod"},
+                  "spec": {
+                    "hostNetwork": true,
+                    "hostPID": true,
+                    "volumes": [{"name": "host", "hostPath": {"path": "/"}}],
+                    "containers": [
+                      {
+                        "name": "danger",
+                        "securityContext": {
+                          "privileged": true,
+                          "allowPrivilegeEscalation": true
+                        },
+                        "resources": {}
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture puntual; no prueba enforcement admission."],
+        "evidence_sha256": "e6ccbff6165f3cb94116fc338b59c95236323c4d427605052b039d71b4d33755"
+      }
+    ]
+  }
+}

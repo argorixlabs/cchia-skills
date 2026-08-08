@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-AZURE-IAM-005
+title: Restringir roles privilegiados y principals anómalos en Azure RBAC
+domain: CLOUD
+objective: Evaluar un snapshot runtime read-only de Azure RBAC y detectar Owner o User Access Administrator en scopes amplios, principals desconocidos y nombres public-like.
+severity: HIGH
+evidence:
+  minimum_level: E4
+  retention: assessment
+applicability:
+  any_of: [runtime-azure-role-assignments, collector-az-role-assignments-requested]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Asignaciones Azure RBAC de la suscripción consultada por az-role-assignments
+  risk: Roles capaces de administrar recursos o acceso en scopes amplios y principals anómalos aumentan privilegios y superficie de abuso.
+  business_impact: Una identidad comprometida puede ampliar acceso, alterar recursos o delegar privilegios a escala de suscripción.
+  technical_impact: Owner controla recursos y asignaciones; User Access Administrator administra acceso. Un scope amplio extiende el blast radius.
+  regulatory_compliance_impact: Debilita mínimo privilegio y gobierno de accesos; el hallazgo no demuestra por sí solo incumplimiento normativo.
+  root_cause: Asignaciones RBAC privilegiadas demasiado amplias, principals no resolubles o identidades con marcadores public-like.
+  priority: 30 days
+  owner: Cloud Security / Azure Platform Engineering
+  verification: Corregir asignaciones y reejecutar az-role-assignments con identidad read-only, luego CCHIA-AZURE-IAM-005.
+  residual_risk: El snapshot no demuestra herencia desde management groups, PIM/eligibilidad, historia, drift ni permisos fuera de Azure RBAC.

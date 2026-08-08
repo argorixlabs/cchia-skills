@@ -1,0 +1,35 @@
+schema_version: "1.0"
+control_id: CCHIA-GCP-IAM-002
+frameworks:
+  nist:
+    - id: NIST-CSF-2.0-PR.AA-05
+      type: direct
+      rationale: Los permisos y autorizaciones deben gestionarse incorporando mínimo privilegio y separación de funciones.
+    - id: NIST-SP-800-53r5.1-AC-6
+      type: direct
+      rationale: El control reduce privilegios excesivos.
+  iso:
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación con access control y privileged access; confirmar controles exactos contra copia licenciada.
+  cchia:
+    - id: CCHIA-GCP-IAM-002
+      type: native
+      rationale: Evidencia estática sobre bindings GCP declarados en Terraform.
+  cis:
+    - id: CIS-Google-Cloud-Platform-Foundation-Benchmark
+      type: conceptual
+      rationale: Los benchmarks GCP incluyen recomendaciones de IAM; verificar versión y sección licenciada aplicable.
+sources:
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"
+  - title: NIST Cybersecurity Framework 2.0
+    url: https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
+    verified: "2026-08-07"
+  - title: Google Cloud IAM basic and predefined roles
+    url: https://cloud.google.com/iam/docs/roles-overview
+    verified: "2026-08-07"
+  - title: ISO/IEC 27001:2022
+    url: https://www.iso.org/standard/27001
+    verified: "2026-08-07"

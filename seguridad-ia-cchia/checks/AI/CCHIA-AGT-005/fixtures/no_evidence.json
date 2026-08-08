@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-AGT-005",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["agent"],
+    "signal_evidence": {"agent": ["system.agents"]},
+    "collection": {"complete": true}
+  }
+}

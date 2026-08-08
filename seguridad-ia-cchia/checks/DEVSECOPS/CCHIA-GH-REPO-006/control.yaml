@@ -1,0 +1,28 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-GH-REPO-006
+title: Repositorio GitHub con reglas y permisos Actions mínimos
+domain: DEVSECOPS
+objective: Verificar que la rama por defecto tenga enforcement y aprobación humana, y que GitHub Actions use permisos mínimos por defecto.
+severity: HIGH
+evidence:
+  minimum_level: E3
+  retention: assessment
+applicability:
+  any_of:
+    - runtime-github-repo-security
+    - collector-gh-repo-security-requested
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Repositorio GitHub y workflows de GitHub Actions
+  risk: Cambios no revisados o tokens con permisos amplios pueden alterar código, workflows y artefactos de entrega.
+  business_impact: Compromiso de la cadena de suministro, publicación no autorizada y pérdida de integridad del producto.
+  technical_impact: Merge sin aprobación, escritura por defecto con GITHUB_TOKEN o aprobación automática de PRs amplían el impacto de un workflow comprometido.
+  regulatory_compliance_impact: Debilita segregación de funciones, least privilege y control de cambios; la obligación exacta depende del alcance y jurisdicción.
+  root_cause: Rulesets inexistentes o incompletos y defaults permisivos de GitHub Actions.
+  priority: 30 days
+  owner: DevSecOps / Repository Administrators
+  verification: Reejecutar gh-repo-security con los cuatro comandos AVAILABLE y evidencia completa después de aplicar el cambio.
+  residual_risk: El snapshot no demuestra bypass efectivo, protección legacy, historial ni ausencia de drift posterior.

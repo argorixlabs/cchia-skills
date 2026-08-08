@@ -1,0 +1,44 @@
+schema_version: "1.0"
+control_id: CCHIA-AGT-005
+frameworks:
+  nist:
+    - id: NIST-SP-800-53r5.1-AC-3
+      type: conceptual
+      rationale: El enforcement de autorización debe mediar el acceso a funciones y recursos.
+    - id: NIST-SP-800-53r5.1-AC-6
+      type: direct
+      rationale: Las tools y la identidad del agente deben operar con mínimo privilegio.
+    - id: NIST-AI-RMF-1.0-MANAGE
+      type: conceptual
+      rationale: La supervisión y respuesta reducen riesgos priorizados del sistema de IA.
+  iso:
+    - id: ISO/IEC-42001:2023
+      type: conceptual
+      rationale: Alineación con supervisión y controles operacionales de IA; confirmar requisitos exactos contra copia licenciada.
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación con control de acceso y segregación de funciones; no declara conformidad.
+  cchia:
+    - id: CCHIA-AGT-005
+      type: native
+      rationale: Control reforzado para AI + autonomía + privilegios + entradas no confiables.
+  owasp:
+    - id: LLM06:2025
+      type: direct
+      rationale: Excessive Agency incluye autonomía excesiva y ausencia de aprobación de acciones de alto impacto.
+    - id: OWASP-Agentic-Top-10:2026
+      type: conceptual
+      rationale: Marco vigente para riesgos de aplicaciones agénticas.
+sources:
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"
+  - title: OWASP LLM06:2025 Excessive Agency
+    url: https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+    verified: "2026-08-07"
+  - title: OWASP Top 10 for Agentic Applications 2026
+    url: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+    verified: "2026-08-07"
+  - title: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    verified: "2026-08-07"

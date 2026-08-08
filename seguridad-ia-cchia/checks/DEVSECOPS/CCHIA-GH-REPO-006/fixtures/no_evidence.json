@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GH-REPO-006",
+  "case": "no_evidence",
+  "expected_status": "NOT_ASSESSED",
+  "context": {
+    "signals": ["repository", "collector-gh-repo-security-requested"],
+    "signal_evidence": {
+      "collector-gh-repo-security-requested": ["fixture collector solicitado sin ejecutable"]
+    },
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "gh-repo-security",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "UNAVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "github",
+          "interface": {
+            "kind": "command",
+            "tool": "gh",
+            "sdk": "GitHub CLI",
+            "sdk_version": null,
+            "executable_available": false,
+            "resolved_executable": null
+          },
+          "commands": [
+            {
+              "command_id": "repo-view",
+              "policy_id": "gh.repo.view.v1",
+              "argv": ["gh", "repo", "view", "fixture-org/fixture-repo", "--json", "nameWithOwner,defaultBranchRef,visibility,isArchived"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "repo-metadata",
+              "policy_id": "gh.api.repo.v1",
+              "argv": ["gh", "api", "repos/fixture-org/fixture-repo", "-H", "Accept: application/vnd.github+json", "-H", "X-GitHub-Api-Version: 2022-11-28"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "repo-rulesets",
+              "policy_id": "gh.api.repo.rulesets.v1",
+              "argv": ["gh", "api", "repos/fixture-org/fixture-repo/rulesets", "-H", "Accept: application/vnd.github+json", "-H", "X-GitHub-Api-Version: 2022-11-28"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            },
+            {
+              "command_id": "actions-workflow-permissions",
+              "policy_id": "gh.api.repo.actions-workflow-permissions.v1",
+              "argv": ["gh", "api", "repos/fixture-org/fixture-repo/actions/permissions/workflow", "-H", "Accept: application/vnd.github+json", "-H", "X-GitHub-Api-Version: 2022-11-28"],
+              "status": "UNAVAILABLE",
+              "exit_code": null,
+              "duration_ms": 0
+            }
+          ]
+        },
+        "evidence": [],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["No se encontró gh en PATH; no se ejecutó ningún comando."],
+        "evidence_sha256": "083a0502896e0e80813141c3a26f0041eaf0e41f57bae06b2bd257e63fd29aa0"
+      }
+    ]
+  }
+}

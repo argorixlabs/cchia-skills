@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-AWS-IAM-004
+title: Proteger root y evitar privilegios administrativos amplios en AWS IAM
+domain: CLOUD
+objective: Evaluar un snapshot runtime read-only de la cuenta AWS para detectar root sin MFA, access keys del root, AdministratorAccess adjunto o acciones wildcard permitidas.
+severity: CRITICAL
+evidence:
+  minimum_level: E4
+  retention: assessment
+applicability:
+  any_of: [runtime-aws-iam, collector-aws-iam-requested]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Root user e identidades/políticas IAM de la cuenta AWS consultada
+  risk: Credenciales root persistentes o privilegios administrativos amplios pueden permitir control transversal de la cuenta.
+  business_impact: Acceso no autorizado, alteración o exposición de recursos y datos, fraude e interrupción de servicios.
+  technical_impact: Root sin MFA, access keys root, AdministratorAccess y acciones wildcard amplían el blast radius de una identidad comprometida.
+  regulatory_compliance_impact: Debilita autenticación reforzada y mínimo privilegio; el hallazgo no demuestra por sí solo incumplimiento normativo.
+  root_cause: Gobierno insuficiente del root user o asignación de políticas IAM administrativas en lugar de permisos mínimos.
+  priority: Immediate
+  owner: Cloud Security / IAM / Platform Engineering
+  verification: Corregir root y políticas, ejecutar nuevamente aws-iam con identidad read-only y reejecutar CCHIA-AWS-IAM-004.
+  residual_risk: El snapshot no cubre historia, drift posterior, SCP, resource policies, IAM Identity Center ni acceso efectivo fuera de la cuenta.

@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-K8S-RBAC-002",
+  "case": "positive",
+  "expected_status": "FAIL",
+  "context": {
+    "signals": ["kubernetes", "runtime-k8s-rbac"],
+    "signal_evidence": {"runtime-k8s-rbac": ["fixture kubectl-rbac AVAILABLE"]},
+    "system": {},
+    "files": [],
+    "collection": {"complete": true},
+    "collectors": [
+      {
+        "schema_version": "1.0",
+        "collector_id": "kubectl-rbac",
+        "collector_version": "1.0.0",
+        "mode": "read_only",
+        "status": "AVAILABLE",
+        "collected_at": "2026-08-07T22:00:00Z",
+        "provenance": {
+          "target": null,
+          "provider": "kubernetes",
+          "interface": {
+            "kind": "command",
+            "tool": "kubectl",
+            "sdk": "Kubernetes kubectl client",
+            "sdk_version": null,
+            "executable_available": true,
+            "resolved_executable": "C:/fixture/kubectl.exe"
+          },
+          "commands": [
+            {
+              "command_id": "cluster-rbac",
+              "policy_id": "kubectl.rbac.cluster.v1",
+              "argv": ["kubectl", "get", "clusterroles,clusterrolebindings", "-o", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "7f684489bae4139647e1a3727a3bdeafc7d70096b8409021d037fd4303a65f99",
+              "stderr": ""
+            },
+            {
+              "command_id": "namespaced-rbac",
+              "policy_id": "kubectl.rbac.namespaced.v1",
+              "argv": ["kubectl", "get", "roles,rolebindings", "--all-namespaces", "-o", "json"],
+              "status": "AVAILABLE",
+              "exit_code": 0,
+              "duration_ms": 1,
+              "stdout_sha256": "0f425bdf17ff2446376af247b851d1fdaaa3a4a53ddf18b51aa8de90dc5ddbe0",
+              "stderr": ""
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "command_id": "cluster-rbac",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {
+              "apiVersion": "v1",
+              "kind": "List",
+              "items": [
+                {
+                  "apiVersion": "rbac.authorization.k8s.io/v1",
+                  "kind": "ClusterRole",
+                  "metadata": {"name": "dangerous-operator"},
+                  "rules": [{"apiGroups": ["*"], "resources": ["*"], "verbs": ["*"]}]
+                },
+                {
+                  "apiVersion": "rbac.authorization.k8s.io/v1",
+                  "kind": "ClusterRoleBinding",
+                  "metadata": {"name": "anonymous-admin"},
+                  "roleRef": {
+                    "apiGroup": "rbac.authorization.k8s.io",
+                    "kind": "ClusterRole",
+                    "name": "cluster-admin"
+                  },
+                  "subjects": [
+                    {
+                      "kind": "Group",
+                      "name": "system:unauthenticated",
+                      "apiGroup": "rbac.authorization.k8s.io"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "command_id": "namespaced-rbac",
+            "status": "AVAILABLE",
+            "content_type": "application/json",
+            "data": {"apiVersion": "v1", "kind": "List", "items": []}
+          }
+        ],
+        "redaction": {
+          "applied": true,
+          "strategy": "cchia-default-v1",
+          "replacement": "[REDACTED]"
+        },
+        "limitations": ["Fixture puntual; no representa acceso efectivo externo."],
+        "evidence_sha256": "716972efb3af75f67e64aaf597674e055f3295cbeb6de07ebadb75c2a4e2b16f"
+      }
+    ]
+  }
+}

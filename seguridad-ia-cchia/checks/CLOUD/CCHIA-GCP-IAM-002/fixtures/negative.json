@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-GCP-IAM-002",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["repository", "terraform", "gcp"],
+    "files": [
+      {
+        "path": "iam.tf",
+        "content": "resource \"google_project_iam_member\" \"reader\" {\n  project = \"fixture-project\"\n  role    = \"roles/storage.objectViewer\"\n  member  = \"group:platform@example.invalid\"\n}\n"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

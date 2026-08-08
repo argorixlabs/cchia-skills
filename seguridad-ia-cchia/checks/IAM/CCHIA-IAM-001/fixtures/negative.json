@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "control_id": "CCHIA-IAM-001",
+  "case": "negative",
+  "expected_status": "PASS",
+  "context": {
+    "signals": ["repository"],
+    "files": [
+      {
+        "path": "src/settings.py",
+        "content": "api_key = os.getenv(\"API_KEY\")\n"
+      }
+    ],
+    "collection": {"complete": true}
+  }
+}

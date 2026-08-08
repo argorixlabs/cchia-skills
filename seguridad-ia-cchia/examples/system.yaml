@@ -1,0 +1,21 @@
+name: Demo CCHIA Agent
+description: AI agent that reads external email and can delete customer records through an MCP tool.
+owner: Product Security
+jurisdictions: [Chile]
+provider: Example LLM Provider
+model: example-model-v1
+data_categories: [personal data, confidential]
+agents:
+  - name: customer-ops-agent
+    identity: svc-customer-ops
+tools:
+  - name: delete_customer_record
+    effect: delete records
+    permission: write
+    approval: none
+human_oversight:
+  mode: none
+monitoring:
+  tool_calls: logged
+decommissioning:
+  kill_switch: documented

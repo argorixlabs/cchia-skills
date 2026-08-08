@@ -1,0 +1,50 @@
+schema_version: "1.0"
+control_id: CCHIA-AWS-IAM-004
+frameworks:
+  nist:
+    - id: NIST-CSF-2.0-PR.AA-03
+      type: conceptual
+      rationale: El indicador MFA del root user aporta evidencia puntual sobre autenticación reforzada para una identidad privilegiada.
+    - id: NIST-CSF-2.0-PR.AA-05
+      type: direct
+      rationale: AdministratorAccess y acciones wildcard contradicen una autorización acotada y revisable en el snapshot observado.
+    - id: NIST-SP-800-53r5.1-AC-6
+      type: direct
+      rationale: La detección de grants administrativos y wildcard aporta evidencia técnica puntual sobre mínimo privilegio.
+  iso:
+    - id: ISO/IEC-27001:2022
+      type: conceptual
+      rationale: Alineación conceptual con autenticación, control de acceso y privilegios; confirmar controles exactos contra una copia licenciada.
+  cchia:
+    - id: CCHIA-AWS-IAM-004
+      type: native
+      rationale: Evaluación runtime redacted del root user y las autorizaciones IAM enumeradas por aws-iam.
+  aws:
+    - id: AWS-IAM-root-user-best-practices
+      type: direct
+      rationale: AWS recomienda MFA para el root user y no crear access keys root salvo necesidad excepcional.
+    - id: AWS-IAM-least-privilege
+      type: direct
+      rationale: Las políticas AdministratorAccess y acciones wildcard son patrones incompatibles con permisos mínimos en la mayoría de los usos.
+sources:
+  - title: AWS CLI get-account-summary
+    url: https://docs.aws.amazon.com/cli/latest/reference/iam/get-account-summary.html
+    verified: "2026-08-07"
+  - title: AWS CLI get-account-authorization-details
+    url: https://docs.aws.amazon.com/cli/latest/reference/iam/get-account-authorization-details.html
+    verified: "2026-08-07"
+  - title: AWS IAM root user best practices
+    url: https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html
+    verified: "2026-08-07"
+  - title: AWS managed policy AdministratorAccess
+    url: https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AdministratorAccess.html
+    verified: "2026-08-07"
+  - title: NIST Cybersecurity Framework 2.0
+    url: https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
+    verified: "2026-08-07"
+  - title: NIST SP 800-53 Revision 5.1 derived OSCAL publication
+    url: https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf
+    verified: "2026-08-07"
+  - title: ISO/IEC 27001:2022
+    url: https://www.iso.org/standard/27001
+    verified: "2026-08-07"

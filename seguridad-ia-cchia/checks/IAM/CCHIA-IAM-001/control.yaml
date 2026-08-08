@@ -1,0 +1,26 @@
+schema_version: "1.0"
+version: "1.0.0"
+id: CCHIA-IAM-001
+title: Credenciales y secretos no deben residir en el repositorio
+domain: IAM
+objective: Detectar material de autenticación incorporado directamente en artefactos versionables.
+severity: HIGH
+evidence:
+  minimum_level: E3
+  retention: assessment
+applicability:
+  any_of: [repository]
+execution:
+  mode: read_only
+  timeout_seconds: 10
+finding:
+  asset_or_process: Repositorio y ciclo de vida de credenciales
+  risk: Una credencial expuesta puede permitir acceso no autorizado y movimiento lateral.
+  business_impact: Compromiso de datos, servicios o cuentas cloud y costos de respuesta/rotación.
+  technical_impact: Uso indebido de API keys, contraseñas o claves privadas fuera de los controles IAM.
+  regulatory_compliance_impact: Puede afectar deberes de control de acceso, protección de datos y trazabilidad.
+  root_cause: Gestión de secretos fuera de un vault o secret manager y controles preventivos insuficientes.
+  priority: Immediate
+  owner: IAM / DevSecOps
+  verification: Eliminar el secreto, rotarlo en origen y volver a ejecutar CCHIA-IAM-001.
+  residual_risk: Persiste hasta demostrar rotación y revisar historial/versiones derivadas.
